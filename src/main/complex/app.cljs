@@ -84,6 +84,19 @@
    [:text {:transform "scale(0.6) translate(266,68)"
            :fill      "#ffcc00"} (/ (.round js/Math (* 10 (/ 6 y-scale))) 10)]])
 
+(defn v [x y a]
+  [:g [:path {:d (str "M" (+ 146 x) " " (+ 155.5 y)
+                      "c.35-2.1 4.2-5.25 5.25-5.6-1.05-.35-4.9-3.5-5.25-5.6")
+              :transform (str "rotate(" a " " (+ x 150) " " (+ y 150) ")")
+              :stroke "#61e2ff" :fill "none"}]
+   [:path {:d (str "M150 150l" x " " y)
+           :stroke "#61e2ff" :fill "none"}]])
+
+(def x1 -3)
+(def y1 5)
+(def x2 2)
+(def y2 3)
+
 (defn app []
   [:div#app
    [:h4    (tex "z=z\\cdot1")]
@@ -95,7 +108,15 @@
    [:g [grid view-box-width 16] 
     [arrows view-box-width]
     [ticks view-box-width 16]
-    [units 10 10]]]]])
+    [units 10 10]
+    [v 
+     (* x1 25) 
+     (* y1 -25) 
+     (- -180 (* (/ 180 js/Math.PI) (.atan js/Math (/ y1 x1))))]
+    [v 
+     (* x2 25) 
+     (* y2 -25) 
+     (- (* (/ 180 js/Math.PI) (.atan js/Math (/ y2 x2))))]]]]])
 
 (defn render []
   (rdom/render [app]
