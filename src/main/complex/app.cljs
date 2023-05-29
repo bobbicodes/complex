@@ -1,5 +1,16 @@
 (ns complex.app
-  (:require [reagent.dom :as rdom]))
+  (:require [reagent.dom :as rdom]
+            ["katex" :as katex]))
+
+(defn tex [text]
+  [:span {:ref (fn [el]
+                 (when el
+                   (try
+                     (katex/render text el (clj->js
+                                            {:throwOnError false}))
+                     (catch :default e
+                       (js/console.warn "Unexpected KaTeX error" e)
+                       (aset el "innerHTML" text)))))}])
 
 (def view-box-width 300)
 (def view-box-height 300)
@@ -75,7 +86,8 @@
 
 (defn app []
   [:div#app
-   [:h1 "complex"]
+   [:h4    (tex "z=z\\cdot1")]
+   [:h4    (tex "z\\cdot i")]
    [:div
    [:svg {:width    700
                    :view-box (str "0 0 " view-box-width " " view-box-height)
