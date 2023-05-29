@@ -23,6 +23,22 @@
              :stroke-width 1
              :opacity (if (= y (/ size 2)) 1 0.22)}])])
 
+(defn arrows [size]
+  [:path {:d
+          (str "M6.2 " (- (/ size 2) 5.6)
+               "c-.35 2.1-4.2 5.25-5.25 5.6 1.05.35 4.9 3.5 5.25 5.6"
+               "M" (- size 6) " " (+ 5.6 (/ size 2))
+               "c.35-2.1 4.2-5.25 5.25-5.6-1.05-.35-4.9-3.5-5.25-5.6"
+               "M" (+ 5.6 (/ size 2)) " 6.2"
+               "c-2.1-.35-5.25-4.2-5.6-5.25-.35 1.05-3.5 4.9-5.6 5.25"
+               "M" (- (/ size 2) 5.6) " " (- size 6)
+               "c2.1.35 5.25 4.2 5.6 5.25.35-1.05 3.5-4.9 5.6-5.25")
+          :fill "none"
+          :stroke "#ffcc00"
+          :stroke-linejoin "round"
+          :stroke-linecap "round"
+          :stroke-width 1}])
+
 (defn app []
   [:div#app
    [:h1 "complex"]
@@ -30,7 +46,7 @@
    [:svg {:width    700
                    :view-box (str "0 0 " view-box-width " " view-box-height)
                    }
-   [grid view-box-width 16]]]])
+   [:g [grid view-box-width 16] [arrows view-box-width]]]]])
 
 (defn render []
   (rdom/render [app]
