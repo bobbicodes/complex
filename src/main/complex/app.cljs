@@ -39,6 +39,25 @@
           :stroke-linecap "round"
           :stroke-width 1}])
 
+(defn ticks [size rows]
+  [:g
+   (for [x (range 0 (- size (/ size rows)) (/ size rows))]
+     ^{:key x}
+     [:line {:x1     (+ x (/ size rows))
+             :y1     (+ (/ (/ size rows) 3) (/ size 2))
+             :x2     (+ x (/ size rows))
+             :y2     (- (/ size 2) (/ (/ size rows) 3))
+             :stroke "#ffcc00"
+             :stroke-width 1}])
+   (for [y (range 0 (- size (/ size rows)) (/ size rows))]
+     ^{:key y}
+     [:line {:x1     (+ (/ (/ size rows) 3) (/ size 2))
+             :y1     (+ y (/ size rows))
+             :x2     (- (/ size 2) (/ (/ size rows) 3))
+             :y2     (+ y (/ size rows))
+             :stroke "#ffcc00"
+             :stroke-width 1}])])
+
 (defn app []
   [:div#app
    [:h1 "complex"]
@@ -46,7 +65,9 @@
    [:svg {:width    700
                    :view-box (str "0 0 " view-box-width " " view-box-height)
                    }
-   [:g [grid view-box-width 16] [arrows view-box-width]]]]])
+   [:g [grid view-box-width 16] 
+    [arrows view-box-width]
+    [ticks view-box-width 16]]]]])
 
 (defn render []
   (rdom/render [app]
