@@ -58,6 +58,21 @@
              :stroke "#ffcc00"
              :stroke-width 1}])])
 
+(defn units [x-scale y-scale]
+  [:g
+   [:text {:transform "scale(0.6) translate(306,276)"
+           :fill      "#ffcc00"} (/ (.round js/Math (* 10 (* x-scale 2))) 10)]
+   [:text {:transform "scale(0.6) translate(368,276)"
+           :fill      "#ffcc00"} (/ (.round js/Math (* 10 (* x-scale 4))) 10)]
+   [:text {:transform "scale(0.6) translate(432,276)"
+           :fill      "#ffcc00"} (/ (.round js/Math (* 10 (* x-scale 6))) 10)]
+   [:text {:transform "scale(0.6) translate(266,193)"
+           :fill      "#ffcc00"} (/ (.round js/Math (* 10 (/ 2 y-scale))) 10)]
+   [:text {:transform "scale(0.6) translate(266,130)"
+           :fill      "#ffcc00"} (/ (.round js/Math (* 10 (/ 4 y-scale))) 10)]
+   [:text {:transform "scale(0.6) translate(266,68)"
+           :fill      "#ffcc00"} (/ (.round js/Math (* 10 (/ 6 y-scale))) 10)]])
+
 (defn app []
   [:div#app
    [:h1 "complex"]
@@ -67,7 +82,8 @@
                    }
    [:g [grid view-box-width 16] 
     [arrows view-box-width]
-    [ticks view-box-width 16]]]]])
+    [ticks view-box-width 16]
+    [units 10 10]]]]])
 
 (defn render []
   (rdom/render [app]
