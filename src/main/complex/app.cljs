@@ -1,9 +1,9 @@
-(ns shadow-reagent.app
+(ns complex.app
   (:require [reagent.dom :as rdom]))
 
 (defn app []
   [:div#app
-   [:h1 "shadow-cljs reagent template"]])
+   [:h1 "complex"]])
 
 (defn render []
   (rdom/render [app]
