@@ -6,17 +6,15 @@
 (defn tex [s x y]
   [:foreignObject
    {:transform "scale(0.7)"
-    :width  200
-    :height 200
-    :x      x
-    :y      y
-    :ref    (fn [el]
-              (when el
-                (try
-                  (katex/render s el #js{:throwOnError false})
-                  (catch :default e
-                    (js/console.warn "Unexpected KaTeX error" e)
-                    (set! el -innerHTML s)))))}])
+    :width  200 :height 200
+    :x x :y y
+    :ref (fn [el]
+           (when el
+             (try
+               (katex/render s el #js{:throwOnError false})
+                 (catch :default e
+                  (js/console.warn "Unexpected KaTeX error" e)
+                  (set! el -innerHTML s)))))}])
 
 (def view-box-width 300)
 (def view-box-height 300)
@@ -91,8 +89,8 @@
                       "c.35-2.1 4.2-5.25 5.25-5.6-1.05-.35-4.9-3.5-5.25-5.6")
               :transform (str "rotate(" a " " (+ x 150) " " (+ y 150) ")")
               :stroke "#61e2ff" :fill "none"}]
-   [tex "z\\cdot i" 90 10]
-   [tex "z=z\\cdot 1" 260 80]
+   [tex "\\textcolor{lightgreen}{z\\cdot i}" 90 10]
+   [tex "\\textcolor{lightgreen}{z=z\\cdot 1}" 260 80]
    [:path {:d (str "M150 150l" x " " y)
            :stroke "#61e2ff" :fill "none"}]])
 
