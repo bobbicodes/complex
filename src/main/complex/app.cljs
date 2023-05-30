@@ -29,9 +29,9 @@
    [:path {:d      (str "M150 150l" x " " y)
            :stroke "#61e2ff" :fill   "none"}]])
 
-(def x1 -3)
+(def x1 -7)
 (def y1 5)
-(def x2 2)
+(def x2 7)
 (def y2 3)
 
 (defn app []
@@ -42,10 +42,10 @@
      [grid/arrows view-box-width]
      [grid/ticks view-box-width 16]
      [grid/units 1 1]
-     [v (* x1 25) (* y1 -25) 
+     [v (* x1 18.5) (* y1 -19) 
       (- -180 (* (/ 180 js/Math.PI) (.atan js/Math (/ y1 x1))))
       "\\textcolor{pink}{z\\cdot i}"]
-     [v (* x2 25) (* y2 -25) 
+     [v (* x2 18.5) (* y2 -18.5) 
       (- (* (/ 180 js/Math.PI) (.atan js/Math (/ y2 x2))))
       "\\textcolor{lightgreen}{z=z\\cdot 1}"]]]])
 
