@@ -1,41 +1,25 @@
 (ns complex.app
   (:require 
-   [reagent.core :as r]
    [reagent.dom :as rdom]
-            ["katex" :as katex]))
+   ["katex" :as katex]))
 
-(defn tex [text]
-  [:span {:ref (fn [el]
-                 (when el
-                   (try
-                     (katex/render text el (clj->js
-                                            {:throwOnError false}))
-                     (catch :default e
-                       (js/console.warn "Unexpected KaTeX error" e)
-                       (aset el "innerHTML" text)))))}])
-
-(defn tex-text [s x y]
-  (let [!text (r/atom s)]
-    (fn []
-      [:foreignObject
-       {:width 1000
-        :height 1000
-        :x x
-        :y y
-        :ref (fn [el]
-               (when el
-                 (try
-                   (katex/render @!text el #js{:throwOnError false})
-                   (catch :default e
-                     (js/console.warn "Unexpected KaTeX error" e)
-                     (aset el "innerHTML" @!text)))))}])))
+(defn tex [s x y]
+  [:foreignObject
+   {:transform "scale(0.7)"
+    :width  200
+    :height 200
+    :x      x
+    :y      y
+    :ref    (fn [el]
+              (when el
+                (try
+                  (katex/render s el #js{:throwOnError false})
+                  (catch :default e
+                    (js/console.warn "Unexpected KaTeX error" e)
+                    (set! el -innerHTML s)))))}])
 
 (def view-box-width 300)
 (def view-box-height 300)
-
-(defn make-path [points]
-  (str "M" (apply str (interpose " " (for [[x y] points]
-                                       (str x " " y))))))
 
 (defn grid [size rows]
   [:g
@@ -102,20 +86,15 @@
    [:text {:transform "scale(0.6) translate(266,68)"
            :fill      "#ffcc00"} (/ (.round js/Math (* 10 (/ 6 y-scale))) 10)]])
 
-(defn v [x y a label]
+(defn v [x y a]
   [:g [:path {:d (str "M" (+ 146 x) " " (+ 155.5 y)
                       "c.35-2.1 4.2-5.25 5.25-5.6-1.05-.35-4.9-3.5-5.25-5.6")
               :transform (str "rotate(" a " " (+ x 150) " " (+ y 150) ")")
               :stroke "#61e2ff" :fill "none"}]
-   [tex-text "z\\cdot i" 60 0]
-   [tex-text "z=z\\cdot 1" 170 50]
-   #_[:text {:transform (str "scale(1) translate(" (+ x 150) "," (+ y 150) ")")
-           :fill      "#ffcc00"} (tex-text label)]
+   [tex "z\\cdot i" 90 10]
+   [tex "z=z\\cdot 1" 260 80]
    [:path {:d (str "M150 150l" x " " y)
            :stroke "#61e2ff" :fill "none"}]])
-
-;(tex "z\\cdot i")
-;(tex "z=z\\cdot 1")
 
 (def x1 -3)
 (def y1 5)
@@ -124,8 +103,6 @@
 
 (defn app []
   [:div#app
-   [:h4    (tex "z=z\\cdot 1")]
-   [:h4    (tex "z\\cdot i")]
    [:div
    [:svg {:width    700
                    :view-box (str "0 0 " view-box-width " " view-box-height)
@@ -137,13 +114,11 @@
     [v 
      (* x1 25) 
      (* y1 -25) 
-     (- -180 (* (/ 180 js/Math.PI) (.atan js/Math (/ y1 x1))))
-     "z\\cdot i"]
+     (- -180 (* (/ 180 js/Math.PI) (.atan js/Math (/ y1 x1))))]
     [v 
      (* x2 25) 
      (* y2 -25) 
-     (- (* (/ 180 js/Math.PI) (.atan js/Math (/ y2 x2))))
-     "v2"]]]]])
+     (- (* (/ 180 js/Math.PI) (.atan js/Math (/ y2 x2))))]]]]])
 
 (defn render []
   (rdom/render [app]
