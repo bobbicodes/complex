@@ -78,11 +78,11 @@
    [:text {:transform "scale(0.6) translate(432,276)"
            :fill      "#ffcc00"} (/ (.round js/Math (* 10 (* x-scale 6))) 10)]
    [:text {:transform "scale(0.6) translate(266,193)"
-           :fill      "#ffcc00"} (/ (.round js/Math (* 10 (/ 2 y-scale))) 10)]
+           :fill      "#ffcc00"} (str (/ (.round js/Math (* 10 (/ 2 y-scale))) 10) "i")]
    [:text {:transform "scale(0.6) translate(266,130)"
-           :fill      "#ffcc00"} (/ (.round js/Math (* 10 (/ 4 y-scale))) 10)]
+           :fill      "#ffcc00"} (str (/ (.round js/Math (* 10 (/ 4 y-scale))) 10) "i")]
    [:text {:transform "scale(0.6) translate(266,68)"
-           :fill      "#ffcc00"} (/ (.round js/Math (* 10 (/ 6 y-scale))) 10)]])
+           :fill      "#ffcc00"} (str (/ (.round js/Math (* 10 (/ 6 y-scale))) 10) "i")]])
 
 (defn v [x y a]
   [:g [:path {:d (str "M" (+ 146 x) " " (+ 155.5 y)
@@ -108,7 +108,7 @@
    [:g [grid view-box-width 16] 
     [arrows view-box-width]
     [ticks view-box-width 16]
-    [units 10 10]
+    [units 1 1]
     [v 
      (* x1 25) 
      (* y1 -25) 
